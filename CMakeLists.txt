@@ -17,9 +17,14 @@ set(EXTRA_COMPONENT_DIRS
     "${MATTER_SDK_PATH}/config/esp32/components"
     "${ESP_MATTER_PATH}/components"
     "${ESP_MATTER_PATH}/device_hal/device"
+    "${CMAKE_CURRENT_SOURCE_DIR}/esp-idf-lib/components/esp_idf_lib_helpers"
+    "${CMAKE_CURRENT_SOURCE_DIR}/esp-idf-lib/components/i2cdev"
+    "${CMAKE_CURRENT_SOURCE_DIR}/esp-idf-lib/components/sht3x"
+    "${CMAKE_CURRENT_SOURCE_DIR}/esp-idf-lib/components/bmp180"
+    "${CMAKE_CURRENT_SOURCE_DIR}/esp-idf-lib/components/tsl2591"
     ${extra_components_dirs_append})
 
-project(light)
+project(weather-station)
 
 if(CONFIG_IDF_TARGET_ESP32C2)
     include(relinker)

@@ -74,22 +74,35 @@ esp_err_t app_driver_attribute_update(app_driver_handle_t driver_handle, uint16_
                                       uint32_t attribute_id, esp_matter_attr_val_t *val)
 {
     esp_err_t err = ESP_OK;
-    if (endpoint_id == light_endpoint_id) {
+    if (endpoint_id == light_endpoint_id)
+    {
         led_driver_handle_t handle = (led_driver_handle_t)driver_handle;
-        if (cluster_id == OnOff::Id) {
-            if (attribute_id == OnOff::Attributes::OnOff::Id) {
+        if (cluster_id == OnOff::Id)
+        {
+            if (attribute_id == OnOff::Attributes::OnOff::Id)
+            {
                 err = app_driver_light_set_power(handle, val);
             }
-        } else if (cluster_id == LevelControl::Id) {
-            if (attribute_id == LevelControl::Attributes::CurrentLevel::Id) {
+        }
+        else if (cluster_id == LevelControl::Id)
+        {
+            if (attribute_id == LevelControl::Attributes::CurrentLevel::Id)
+            {
                 err = app_driver_light_set_brightness(handle, val);
             }
-        } else if (cluster_id == ColorControl::Id) {
-            if (attribute_id == ColorControl::Attributes::CurrentHue::Id) {
+        }
+        else if (cluster_id == ColorControl::Id)
+        {
+            if (attribute_id == ColorControl::Attributes::CurrentHue::Id)
+            {
                 err = app_driver_light_set_hue(handle, val);
-            } else if (attribute_id == ColorControl::Attributes::CurrentSaturation::Id) {
+            }
+            else if (attribute_id == ColorControl::Attributes::CurrentSaturation::Id)
+            {
                 err = app_driver_light_set_saturation(handle, val);
-            } else if (attribute_id == ColorControl::Attributes::ColorTemperatureMireds::Id) {
+            }
+            else if (attribute_id == ColorControl::Attributes::ColorTemperatureMireds::Id)
+            {
                 err = app_driver_light_set_temperature(handle, val);
             }
         }
@@ -118,7 +131,8 @@ esp_err_t app_driver_light_set_defaults(uint16_t endpoint_id)
     cluster = cluster::get(endpoint, ColorControl::Id);
     attribute = attribute::get(cluster, ColorControl::Attributes::ColorMode::Id);
     attribute::get_val(attribute, &val);
-    if (val.val.u8 == (uint8_t)ColorControl::ColorMode::kCurrentHueAndCurrentSaturation) {
+    if (val.val.u8 == (uint8_t)ColorControl::ColorMode::kCurrentHueAndCurrentSaturation)
+    {
         /* Setting hue */
         attribute = attribute::get(cluster, ColorControl::Attributes::CurrentHue::Id);
         attribute::get_val(attribute, &val);
@@ -127,12 +141,16 @@ esp_err_t app_driver_light_set_defaults(uint16_t endpoint_id)
         attribute = attribute::get(cluster, ColorControl::Attributes::CurrentSaturation::Id);
         attribute::get_val(attribute, &val);
         err |= app_driver_light_set_saturation(handle, &val);
-    } else if (val.val.u8 == (uint8_t)ColorControl::ColorMode::kColorTemperature) {
+    }
+    else if (val.val.u8 == (uint8_t)ColorControl::ColorMode::kColorTemperature)
+    {
         /* Setting temperature */
         attribute = attribute::get(cluster, ColorControl::Attributes::ColorTemperatureMireds::Id);
         attribute::get_val(attribute, &val);
         err |= app_driver_light_set_temperature(handle, &val);
-    } else {
+    }
+    else
+    {
         ESP_LOGE(TAG, "Color mode not supported");
     }
 
